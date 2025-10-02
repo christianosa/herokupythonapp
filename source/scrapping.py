@@ -68,7 +68,7 @@ class Scrapping:
                     # pegar todos os livros
                     # a função abaixo retorna uma lista de objetos "article" com classe "product_pod"
                     # o parâmetro "L" indica que queremos livros
-                    livros = obterObjetos(urlcategoria, "L")
+                    livros = functions.obterObjetos(urlcategoria, "L")
 
                     # separar titulo, preço, disponibilidade, rating(classificação com estrelas)
                     for livro in livros:
