@@ -8,7 +8,7 @@ from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 import os 
 import sys
-from scrapping import Scrapping
+import scrapping
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -135,8 +135,7 @@ def execute():
     if claims.get('role') != 'admin':
         return jsonify(msg="acesso negado: necessita role=admin"), 403
     else: 
-         from scrapping import Scrapping
-         scrapper = Scrapping()
+         scrapper = scrapping.Scrapping()
          try:
             qtde = scrapper.run()
             return jsonify({f"qtd livros importados": qtde}), 200
