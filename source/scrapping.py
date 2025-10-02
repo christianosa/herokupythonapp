@@ -17,7 +17,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 # from modules.utils.functions import trataTitulo, trataPreco, obterObjetos, obterTotal, trataDisponibilidade
 # from config.variables import Config
 
-from livro_dao import LivroDAO
+import livro_dao 
 from functions import trataTitulo, trataPreco, obterObjetos, obterTotal, trataDisponibilidade
 from variables import Config
 
@@ -100,6 +100,6 @@ class Scrapping:
         Inatancia a classe LivroDAO, responsável pela persistência dos dados de livros na base 
         e chamo o método salvar_livros para salvar os dados no banco de dados SQLite
         """
-        dao = LivroDAO()
+        dao = livro_dao.LivroDAO()
         return dao.salvar_livros(dados)
  
