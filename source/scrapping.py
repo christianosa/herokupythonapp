@@ -18,8 +18,8 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 # from config.variables import Config
 
 from . import livro_dao
-from functions import trataTitulo, trataPreco, obterObjetos, obterTotal, trataDisponibilidade
-from variables import Config
+from . import functions 
+from . import variables
 
 
 class Scrapping:
@@ -35,8 +35,8 @@ class Scrapping:
         
         # pegar todas as categorias dentro do objeto "ul" com classe "nav nav-list"
         # o parâmretro "C" indica que queremos categorias
-        categorias = obterObjetos(self.url, "C")
-        qtdelivros = obterTotal(self.url, "L")      
+        categorias = functions.obterObjetos(self.url, "C")
+        qtdelivros = functions.obterTotal(self.url, "L")      
         dados = []
 
         # para cada categoria, pegar os livros
@@ -52,7 +52,7 @@ class Scrapping:
                 # obtem, dentro da página da categoria, o total de páginas
                 # essa informação vem no topo da página, dentro de uma "ul" com classe "pager" e
                 # é específica de cada categoria
-                paginas = obterTotal(urlcategoria, "P")
+                paginas = functions.obterTotal(urlcategoria, "P")
 
                 # para cada página da categoria, pegar os livros
                 for i in range(1,(paginas+1)):
@@ -72,8 +72,8 @@ class Scrapping:
 
                     # separar titulo, preço, disponibilidade, rating(classificação com estrelas)
                     for livro in livros:
-                        titulo = trataTitulo(livro.h3.a["title"])  # remove caracteres especiais do título
-                        preco = trataPreco(livro.find("p", class_="price_color").text) #.replace("Â","")
+                        titulo = functions.trataTitulo(livro.h3.a["title"])  # remove caracteres especiais do título
+                        preco = functions.trataPreco(livro.find("p", class_="price_color").text) #.replace("Â","")
                         disponibilidade = livro.find("p", class_="instock availability").text.strip()
                         rating = livro.p["class"][1]  # o rating vem como classe: ["star-rating", "Three"]
                         categ = categoria.text.strip()
@@ -81,7 +81,7 @@ class Scrapping:
                         
                         print(f"Importando livro: {titulo}, {self.contador} de {qtdelivros} ")
                         urllivro = livro.a["href"].replace("../../../", urlb + "catalogue/") # url do livro
-                        tabeladetalheslivro = obterObjetos(urllivro, "D") # obtem os detalhes do livro
+                        tabeladetalheslivro = functions.obterObjetos(urllivro, "D") # obtem os detalhes do livro
                         all_tds = tabeladetalheslivro.find_all('td')
                         i = 0
                         for detalhe in all_tds:
@@ -89,7 +89,7 @@ class Scrapping:
                             if i == 1: #upc
                                 upc = detalhe.text # obtem o UPC do livro
                             elif i == 6: #availability
-                                disponibilidade = trataDisponibilidade(detalhe.text)[0] # obtem a disponibilidade do livro
+                                disponibilidade = functions.trataDisponibilidade(detalhe.text)[0] # obtem a disponibilidade do livro
                         
                         self.contador = self.contador + 1
 
