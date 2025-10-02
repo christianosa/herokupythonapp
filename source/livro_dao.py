@@ -12,7 +12,7 @@ from pathlib import Path
 # sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) + '/modules')
 
 # from config.variables import Config
-from variables import Config
+from . import variables
 
 
 """"
@@ -21,7 +21,7 @@ Classe LivroDAO para operações de banco de dados relacionadas a livros.
 
 class LivroDAO:
     # Define o caminho para o novo diretório
-    path_db = Path(Config.db_path)
+    path_db = Path(variables.Config.db_path)
 
     # Cria o diretório e quaisquer diretórios pais ausentes
     path_db.mkdir(parents=True, exist_ok=True)
