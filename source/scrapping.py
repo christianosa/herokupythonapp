@@ -17,7 +17,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 # from modules.utils.functions import trataTitulo, trataPreco, obterObjetos, obterTotal, trataDisponibilidade
 # from config.variables import Config
 
-import livro_dao 
+from . import livro_dao
 from functions import trataTitulo, trataPreco, obterObjetos, obterTotal, trataDisponibilidade
 from variables import Config
 
